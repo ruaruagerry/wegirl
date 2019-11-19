@@ -1,0 +1,23 @@
+hset weshop:catalog:nav 1 "{\"id\":1, \"name\":\"护肤\", \"bannerurl\":\"https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3455920086,1735426098&fm=26&gp=0.jpg\"}"
+hset weshop:catalog:nav 2 "{\"id\":2, \"name\":\"婴儿\", \"bannerurl\":\"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1572021704896&di=16dfe89486381da3aea2146670d96bc5&imgtype=0&src=http%3A%2F%2Fphotocdn.sohu.com%2F20170802%2FImg505075886.jpg\"}"
+
+hset weshop:catalog:category:1 "hf1" "{\"id\":1, \"categoryid\":\"hf1\", \"describe\":\"我的护肤品1\", \"name\":\"护肤1\", \"url\":\"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1572021724995&di=9a057750fd523d002846e2f687fb6055&imgtype=0&src=http%3A%2F%2Fimage5.buy.ccb.com%2Fmerchant%2F201412%2F136639611%2F1500350888969_4.jpg\"}"
+hset weshop:catalog:category:1 "hf2" "{\"id\":1, \"categoryid\":\"hf2\", \"describe\":\"我的护肤品2\", \"name\":\"护肤2\", \"url\":\"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1572021724994&di=0f242474ed4be196d7884473751e951a&imgtype=0&src=http%3A%2F%2Fphotocdn.sohu.com%2F20120205%2FImg333759445.jpg\"}"
+hset weshop:catalog:category:2 "ye1" "{\"id\":2, \"categoryid\":\"ye1\", \"describe\":\"我的婴儿1\", \"name\":\"婴儿1\", \"url\":\"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1572021724994&di=0f242474ed4be196d7884473751e951a&imgtype=0&src=http%3A%2F%2Fphotocdn.sohu.com%2F20120205%2FImg333759445.jpg\"}"
+
+sadd weshop:goods:category:hf1 "hf1_1"
+hset wehshop:goods:info "hf1_1" "{\"goodid\":\"hf1_1\", \"price\":99999, \"name\":\"护肤1_物品1\", \"describe\":\"我的护肤1_物品1\", \"url\":\"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1572021724994&di=0f242474ed4be196d7884473751e951a&imgtype=0&src=http%3A%2F%2Fphotocdn.sohu.com%2F20120205%2FImg333759445.jpg\"}"
+sadd weshop:goods:category:hf1 "hf1_2"
+hset wehshop:goods:info "hf1_2" "{\"goodid\":\"hf1_2\", \"price\":11111, \"name\":\"护肤1_物品2\", \"describe\":\"我的护肤1_物品1\", \"url\":\"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1572021724994&di=0f242474ed4be196d7884473751e951a&imgtype=0&src=http%3A%2F%2Fphotocdn.sohu.com%2F20120205%2FImg333759445.jpg\"}"
+
+
+hset weshop:goods:gallery "hf1_1" "[\"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1572021724994&di=0f242474ed4be196d7884473751e951a&imgtype=0&src=http%3A%2F%2Fphotocdn.sohu.com%2F20120205%2FImg333759445.jpg\",\"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1572021724994&di=0f242474ed4be196d7884473751e951a&imgtype=0&src=http%3A%2F%2Fphotocdn.sohu.com%2F20120205%2FImg333759445.jpg\",\"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1572021724994&di=0f242474ed4be196d7884473751e951a&imgtype=0&src=http%3A%2F%2Fphotocdn.sohu.com%2F20120205%2FImg333759445.jpg\",\"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1572021724994&di=0f242474ed4be196d7884473751e951a&imgtype=0&src=http%3A%2F%2Fphotocdn.sohu.com%2F20120205%2FImg333759445.jpg\"]"
+hset weshop:goods:attribute "hf1_1" "[{\"name\":\"参数1\", \"value\":\"值1\"},{\"name\":\"参数2\", \"value\":\"值2\"}]"
+hset weshop:goods:issue "hf1_1" "[{\"question\":\"问题1\", \"answer\":\"答案1\"},{\"question\":\"问题2\", \"answer\":\"答案2\"}]"
+hset weshop:goods:brand "hf1_1" "{\"brandid\":\"brandid_1\", \"brandname\":\"兰蔻\"}"
+hset weshop:goods:specification "hf1_1" "[{\"specificationid\":\"hf1_1_s_1\", \"name\":\"兰蔻规格1\", \"valuelist\":[{\"detailid\":\"hf1_1_s_1_d_1\", \"value\":\"1规格value1\"},{\"detailid\":\"hf1_1_s_1_d_2\", \"value\":\"1规格value2\"}]}, {\"specificationid\":\"hf1_1_s_2\", \"name\":\"兰蔻规格2\", \"valuelist\":[{\"detailid\":\"hf1_1_s_2_d_1\", \"value\":\"2规格value1\"},{\"detailid\":\"hf1_1_s_2_d_2\", \"value\":\"2规格value2\"}]}]"
+
+
+hset weshop:shop:checkoutconfig "freightprice" 1
+hset weshop:shop:checkoutconfig "wxpayurl" http://47.106.147.185/wx.JPG
+hset weshop:shop:checkoutconfig "zfbpayurl" http://47.106.147.185/zfb.JPG

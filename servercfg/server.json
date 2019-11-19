@@ -1,0 +1,35 @@
+{
+    // 工作模式
+    "daemon": "yes",
+    // 服务器监听端口
+    "port": 3001,
+    // 服务器实例GUID，必须确保唯一(为了兼容旧的web平台,暂时使用int类型)
+    "guid": 1,
+    // redis服务器地址
+    "redis_server": "47.106.147.185:6379",
+    // mysql服务器信息
+    "db": {
+        "dbName": "wegirl",
+        "dbIP": "47.106.147.185:3306",
+        "dbUser": "root",
+        "dbPassword": "123456"
+    },
+    "db_log": {
+        "dbName": "wegirllog",
+        "dbIP": "47.106.147.185:3306",
+        "dbUser": "root",
+        "dbPassword": "123456"
+    },
+    "mq": {
+        // mq服务器信息
+        "mqIP": "127.0.0.1:5672",
+        "mqAccount": "admin",
+        "mqPassword": "admin"
+    },
+    // 服务器配置文件目录
+    "gameCfgsDir": "./servercsv",
+    // 服务器是否用于测试用途
+    "forTestOnly": true,
+    // 敏感词文件
+    "SensitiveWordFile": "./servercfg/sensitiveword.txt"
+}
