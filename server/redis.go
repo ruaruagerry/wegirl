@@ -2,8 +2,8 @@ package server
 
 import (
 	"fmt"
-	"wegirl/servercfg"
 	"time"
+	"wegirl/servercfg"
 
 	"github.com/garyburd/redigo/redis"
 	log "github.com/sirupsen/logrus"

@@ -6,7 +6,7 @@
     // 服务器实例GUID，必须确保唯一(为了兼容旧的web平台,暂时使用int类型)
     "guid": 1,
     // redis服务器地址
-    "redis_server": "47.106.147.185:6379",
+    "redis_server": "47.106.147.185:6380",
     // mysql服务器信息
     "db": {
         "dbName": "wegirl",
