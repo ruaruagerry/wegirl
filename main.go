@@ -21,6 +21,7 @@ import (
 	_ "net/http/pprof"
 
 	_ "wegirl/handles/auth"
+	_ "wegirl/handles/home"
 
 	log "github.com/sirupsen/logrus"
 )
