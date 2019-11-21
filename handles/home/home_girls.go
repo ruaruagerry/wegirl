@@ -2,6 +2,8 @@ package home
 
 import (
 	"encoding/json"
+	"fmt"
+	"net/url"
 	"strings"
 	"wegirl/gconst"
 	"wegirl/pb"
@@ -38,10 +40,11 @@ func girlsHandle(c *server.StupidContext) {
 		return
 	}
 
-	log.Info("tagsHandle enter:")
+	log.Info("girlsHandle enter:", string(c.Body))
 
 	// do something
-	x, err := goquery.ParseUrl(queryServer)
+	queryurl := fmt.Sprintf("%s?cid=%s&page=%d", queryServer, req.CID, req.Page)
+	x, err := goquery.ParseUrl(queryurl)
 	if err != nil {
 		httpRsp.Result = proto.Int32(int32(gconst.ErrHTTP))
 		httpRsp.Msg = proto.String("gpquery失败")
@@ -64,7 +67,7 @@ func girlsHandle(c *server.StupidContext) {
 		}
 
 		tmp := &rconst.HomeImg{
-			Title: title,
+			Title: url.QueryEscape(title),
 			Href:  href,
 			Large: large,
 			Thumb: src,
