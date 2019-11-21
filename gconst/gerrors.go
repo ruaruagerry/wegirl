@@ -33,6 +33,8 @@ const (
 	ErrTokenExpired = Error(11)
 	// ErrCreateUUID 生成uuid失败
 	ErrCreateUUID = Error(12)
+	// ErrHTTP http请求失败
+	ErrHTTP = Error(13)
 
 	/* auth 100-199 */
 	// ErrAuthGetWexinUserInfo 获取微信用户信息失败

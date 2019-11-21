@@ -3,17 +3,18 @@ package home
 import (
 	"encoding/json"
 	"sort"
+	"strings"
 	"wegirl/gconst"
 	"wegirl/pb"
 	"wegirl/rconst"
 	"wegirl/server"
 
-	"github.com/garyburd/redigo/redis"
+	"github.com/crufter/goquery"
 	"github.com/golang/protobuf/proto"
 )
 
 type tagsRsp struct {
-	Tags []*rconst.HomeTags `json:"tags"`
+	Tags []*rconst.HomeTag `json:"tags"`
 }
 
 func tagsHandle(c *server.StupidContext) {
@@ -26,34 +27,29 @@ func tagsHandle(c *server.StupidContext) {
 
 	log.Info("tagsHandle enter:")
 
-	conn := c.RedisConn
-
-	// redis multi get
-	conn.Send("MULTI")
-	conn.Send("HGETALL", rconst.HashHomeTagsConfig)
-	redisMDArray, err := redis.Values(conn.Do("EXEC"))
+	// do something
+	x, err := goquery.ParseUrl(queryServer)
 	if err != nil {
-		httpRsp.Result = proto.Int32(int32(gconst.ErrRedis))
-		httpRsp.Msg = proto.String("统一获取缓存操作失败")
-		log.Errorf("code:%d msg:%s redisMDArray Values err, err:%s", httpRsp.GetResult(), httpRsp.GetMsg(), err.Error())
+		httpRsp.Result = proto.Int32(int32(gconst.ErrHTTP))
+		httpRsp.Msg = proto.String("gpquery失败")
+		log.Errorf("code:%d msg:%s goquery parseurl err, err:%s", httpRsp.GetResult(), httpRsp.GetMsg(), err.Error())
 		return
 	}
 
-	hometagsmap, _ := redis.StringMap(redisMDArray[0], nil)
+	rsptags := []*rconst.HomeTag{}
+	xnodes := x.Find(".panel-heading ul.nav li a")
+	for i := range xnodes {
+		title := xnodes.Eq(i).Html()
+		href := xnodes.Eq(i).Attr("href")
+		hrefs := strings.Split(href, "=")
+		if len(hrefs) == 2 {
+			tmp := &rconst.HomeTag{
+				CID:   hrefs[1],
+				Title: title,
+			}
 
-	// do something
-	rsptags := []*rconst.HomeTags{}
-	for _, v := range hometagsmap {
-		tmp := &rconst.HomeTags{}
-		err := json.Unmarshal([]byte(v), tmp)
-		if err != nil {
-			httpRsp.Result = proto.Int32(int32(gconst.ErrParse))
-			httpRsp.Msg = proto.String("导航栏标签unmarshal解析失败")
-			log.Errorf("code:%d msg:%s tag unmarshal err, err:%s", httpRsp.GetResult(), httpRsp.GetMsg(), err.Error())
-			return
+			rsptags = append(rsptags, tmp)
 		}
-
-		rsptags = append(rsptags, tmp)
 	}
 
 	sort.Stable(tagid(rsptags))
@@ -72,7 +68,7 @@ func tagsHandle(c *server.StupidContext) {
 	httpRsp.Result = proto.Int32(int32(gconst.Success))
 	httpRsp.Data = data
 
-	log.Info("tagsHandle rsp, rsp:", string(data))
+	// log.Info("tagsHandle rsp, rsp:", string(data))
 
 	return
 }

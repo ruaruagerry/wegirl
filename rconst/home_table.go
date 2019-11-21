@@ -1,9 +1,18 @@
 package rconst
 
-// HomeTags 导航栏
-type HomeTags struct {
+// HomeTag 导航栏
+type HomeTag struct {
 	CID   string `json:"cid"`
 	Title string `json:"title"`
+}
+
+// HomeImg 图片
+type HomeImg struct {
+	Title string `json:"title"`
+	Href  string `json:"href"`
+	Large string `json:"large"`
+	Thumb string `json:"thumb"`
+	Small string `json:"small"`
 }
 
 const (

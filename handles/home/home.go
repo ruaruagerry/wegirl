@@ -2,8 +2,12 @@ package home
 
 import "wegirl/rconst"
 
+const (
+	queryServer = "http://www.dbmeinv.com"
+)
+
 // tagid 排序重载
-type tagid []*rconst.HomeTags
+type tagid []*rconst.HomeTag
 
 func (a tagid) Len() int {
 	return len(a)
