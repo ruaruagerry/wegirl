@@ -76,7 +76,7 @@ func girlsHandle(c *server.StupidContext) {
 		filter := false
 		href := item.Eq(i).Attr("href")
 		src := subitem.Eq(i).Attr("src")
-		if i == randidx {
+		if i == randidx && goodimage != "" {
 			src = goodimage
 			filter = true
 		}
