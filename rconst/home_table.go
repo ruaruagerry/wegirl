@@ -8,11 +8,12 @@ type HomeTag struct {
 
 // HomeImg 图片
 type HomeImg struct {
-	Title string `json:"title"`
-	Href  string `json:"href"`
-	Large string `json:"large"`
-	Thumb string `json:"thumb"`
-	Small string `json:"small"`
+	Title  string `json:"title"`
+	Href   string `json:"href"`
+	Large  string `json:"large"`
+	Thumb  string `json:"thumb"`
+	Small  string `json:"small"`
+	Filter bool   `json:"filter"`
 }
 
 const (

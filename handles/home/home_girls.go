@@ -73,6 +73,9 @@ func girlsHandle(c *server.StupidContext) {
 			Thumb: src,
 			Small: small,
 		}
+		if i == 0 {
+			tmp.Filter = true
+		}
 
 		rspimgs = append(rspimgs, tmp)
 	}
