@@ -17,6 +17,6 @@ type HomeImg struct {
 }
 
 const (
-	// HashHomeTagsConfig 导航栏配置
-	HashHomeTagsConfig = "wegirl:home:tagsconfig"
+	// SetHomeGoodImages 擦边小图
+	SetHomeGoodImages = "wegirl:home:goodimages"
 )

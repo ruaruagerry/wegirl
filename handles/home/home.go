@@ -1,6 +1,13 @@
 package home
 
-import "wegirl/rconst"
+import (
+	"math/rand"
+	"wegirl/rconst"
+)
+
+var (
+	droprand *rand.Rand
+)
 
 const (
 	queryServer = "http://www.dbmeinv.com"

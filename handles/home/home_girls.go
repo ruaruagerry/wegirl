@@ -11,6 +11,7 @@ import (
 	"wegirl/server"
 
 	"github.com/crufter/goquery"
+	"github.com/garyburd/redigo/redis"
 	"github.com/golang/protobuf/proto"
 )
 
@@ -42,6 +43,21 @@ func girlsHandle(c *server.StupidContext) {
 
 	log.Info("girlsHandle enter:", string(c.Body))
 
+	conn := c.RedisConn
+
+	// redis multi get
+	conn.Send("MULTI")
+	conn.Send("SRANDMEMBER", rconst.SetHomeGoodImages)
+	redisMDArray, err := redis.Values(conn.Do("EXEC"))
+	if err != nil {
+		httpRsp.Result = proto.Int32(int32(gconst.ErrRedis))
+		httpRsp.Msg = proto.String("统一获取缓存操作失败")
+		log.Errorf("code:%d msg:%s redisMDArray Values err, err:%s", httpRsp.GetResult(), httpRsp.GetMsg(), err.Error())
+		return
+	}
+
+	goodimage, _ := redis.String(redisMDArray[0], nil)
+
 	// do something
 	queryurl := fmt.Sprintf("%s?cid=%s&page=%d", queryServer, req.CID, req.Page)
 	x, err := goquery.ParseUrl(queryurl)
@@ -55,9 +71,15 @@ func girlsHandle(c *server.StupidContext) {
 	rspimgs := []*rconst.HomeImg{}
 	item := x.Find(".panel-body ul.thumbnails li.span3 .thumbnail .img_single a")
 	subitem := x.Find(".panel-body ul.thumbnails li.span3 .thumbnail .img_single a img")
+	randidx := droprand.Intn(len(item) / 2)
 	for i := range item {
+		filter := false
 		href := item.Eq(i).Attr("href")
 		src := subitem.Eq(i).Attr("src")
+		if i == randidx {
+			src = goodimage
+			filter = true
+		}
 		title := subitem.Eq(i).Attr("title")
 		large := ""
 		small := ""
@@ -67,14 +89,12 @@ func girlsHandle(c *server.StupidContext) {
 		}
 
 		tmp := &rconst.HomeImg{
-			Title: url.QueryEscape(title),
-			Href:  href,
-			Large: large,
-			Thumb: src,
-			Small: small,
-		}
-		if i == 0 {
-			tmp.Filter = true
+			Title:  url.QueryEscape(title),
+			Href:   href,
+			Large:  large,
+			Thumb:  src,
+			Small:  small,
+			Filter: filter,
 		}
 
 		rspimgs = append(rspimgs, tmp)
