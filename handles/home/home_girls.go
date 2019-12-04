@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/url"
+	"strconv"
 	"strings"
 	"wegirl/gconst"
 	"wegirl/pb"
@@ -48,7 +49,9 @@ func girlsHandle(c *server.StupidContext) {
 
 	rspimgs := []*rconst.HomeImg{}
 	if servercfg.ForTestOnly {
-		for _, v := range testImgs {
+		cidint, _ := strconv.Atoi(req.CID)
+
+		for _, v := range testImgs[cidint] {
 			tmp := &rconst.HomeImg{
 				Large: v,
 				Thumb: v,
