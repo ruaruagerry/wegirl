@@ -49,16 +49,18 @@ func girlsHandle(c *server.StupidContext) {
 
 	rspimgs := []*rconst.HomeImg{}
 	if servercfg.ForTestOnly {
-		cidint, _ := strconv.Atoi(req.CID)
+		if req.Page == 1 {
+			cidint, _ := strconv.Atoi(req.CID)
 
-		for _, v := range testImgs[cidint] {
-			tmp := &rconst.HomeImg{
-				Large: v,
-				Thumb: v,
-				Small: v,
+			for _, v := range testImgs[cidint] {
+				tmp := &rconst.HomeImg{
+					Large: v,
+					Thumb: v,
+					Small: v,
+				}
+
+				rspimgs = append(rspimgs, tmp)
 			}
-
-			rspimgs = append(rspimgs, tmp)
 		}
 	} else {
 		// redis multi get
