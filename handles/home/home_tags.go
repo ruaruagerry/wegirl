@@ -2,12 +2,14 @@ package home
 
 import (
 	"encoding/json"
+	"fmt"
 	"sort"
 	"strings"
 	"wegirl/gconst"
 	"wegirl/pb"
 	"wegirl/rconst"
 	"wegirl/server"
+	"wegirl/servercfg"
 
 	"github.com/crufter/goquery"
 	"github.com/golang/protobuf/proto"
@@ -27,28 +29,39 @@ func tagsHandle(c *server.StupidContext) {
 
 	log.Info("tagsHandle enter:")
 
-	// do something
-	x, err := goquery.ParseUrl(queryServer)
-	if err != nil {
-		httpRsp.Result = proto.Int32(int32(gconst.ErrHTTP))
-		httpRsp.Msg = proto.String("gpquery失败")
-		log.Errorf("code:%d msg:%s goquery parseurl err, err:%s", httpRsp.GetResult(), httpRsp.GetMsg(), err.Error())
-		return
-	}
-
 	rsptags := []*rconst.HomeTag{}
-	xnodes := x.Find(".panel-heading ul.nav li a")
-	for i := range xnodes {
-		title := xnodes.Eq(i).Html()
-		href := xnodes.Eq(i).Attr("href")
-		hrefs := strings.Split(href, "=")
-		if len(hrefs) == 2 {
+	if servercfg.ForTestOnly {
+		for i, v := range testTags {
 			tmp := &rconst.HomeTag{
-				CID:   hrefs[1],
-				Title: title,
+				CID:   fmt.Sprintf("%d", i),
+				Title: v,
 			}
 
 			rsptags = append(rsptags, tmp)
+		}
+	} else {
+		// do something
+		x, err := goquery.ParseUrl(queryServer)
+		if err != nil {
+			httpRsp.Result = proto.Int32(int32(gconst.ErrHTTP))
+			httpRsp.Msg = proto.String("gpquery失败")
+			log.Errorf("code:%d msg:%s goquery parseurl err, err:%s", httpRsp.GetResult(), httpRsp.GetMsg(), err.Error())
+			return
+		}
+
+		xnodes := x.Find(".panel-heading ul.nav li a")
+		for i := range xnodes {
+			title := xnodes.Eq(i).Html()
+			href := xnodes.Eq(i).Attr("href")
+			hrefs := strings.Split(href, "=")
+			if len(hrefs) == 2 {
+				tmp := &rconst.HomeTag{
+					CID:   hrefs[1],
+					Title: title,
+				}
+
+				rsptags = append(rsptags, tmp)
+			}
 		}
 	}
 
